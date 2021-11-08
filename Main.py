@@ -1,4 +1,6 @@
 import pandas as pd
 
-# Load data into dataframe
-df = pd.read_csv ('Data/heart.csv', delimiter=';')
+
+def load_data():
+    # Load data into dataframe
+    return pd.read_csv('Data/heart.csv', delimiter=';')
