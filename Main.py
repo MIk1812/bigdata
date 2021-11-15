@@ -17,9 +17,8 @@ def makeBoxPlot(dataframe):
     plt.tight_layout()
     plt.show()
     dataframe_2.boxplot(figsize=(5,5))
-    #dataframe.boxplot(column=['Age'])
     plt.xticks(rotation=45)
     plt.tight_layout()
     plt.show()
 
-makeBoxPlot(data)
+makeBoxPlot(X)
