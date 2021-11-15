@@ -65,3 +65,17 @@ def load_data(one_out_of_k: bool):
     out["FastingBS"] = data["FastingBS"]
 
     return out
+
+def remove_outliers():
+    X = pd.read_csv("Data/feature_transform.csv", delimiter=',')
+    Xk = pd.read_csv("Data/one_out_of_k.csv", delimiter=',')
+
+    # if X["RestingBP"] == 0: print("1")
+
+    X.drop(X[X['RestingBP'] == 0].index, inplace = True)
+    X.drop(X[X['Cholesterol'] == 0].index, inplace=True)
+    X.to_csv("feature_transform_outliers_removed.csv")
+
+    Xk.drop(X[X['RestingBP'] == 0].index, inplace=True)
+    Xk.drop(X[X['Cholesterol'] == 0].index, inplace=True)
+    X.to_csv("one_out_of_k_outliers_removed.csv")
