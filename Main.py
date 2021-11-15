@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-
+from matplotlib.pyplot import figure
 
 def load_data(one_out_of_k: bool):
     out = pd.DataFrame()
@@ -67,12 +67,21 @@ def load_data(one_out_of_k: bool):
 
     return out
 
-data = load_data(False);
+data = load_data(False)
 print(data)
 
 def makeBoxPlot(dataframe):
-    dataframe.boxplot()
+    dataframe_1 = dataframe.loc[:,'Age':'Oldpeak'].copy()
+    dataframe_2 = dataframe.loc[:,'HeartDisease':'FastingBS'].copy()
+    dataframe_1.boxplot(figsize=(5,5))
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
+    dataframe_2.boxplot(figsize=(5,5))
+    #dataframe.boxplot(column=['Age'])
+    plt.xticks(rotation=45)
+    plt.tight_layout()
     plt.show()
 
-makeBoxPlot(load_data())
+makeBoxPlot(data)
 
