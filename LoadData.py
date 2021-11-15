@@ -10,7 +10,6 @@ def load_data(one_out_of_k: bool):
     out["Age"] = data["Age"]
     out["RestingBP"] = data["RestingBP"]
     out["Cholesterol"] = data["Cholesterol"]
-    out["FastingBS"] = data["FastingBS"]
     out["MaxHR"] = data["MaxHR"]
     out["Oldpeak"] = data["Oldpeak"]
     out["HeartDisease"] = data["HeartDisease"]
@@ -62,5 +61,7 @@ def load_data(one_out_of_k: bool):
         out["ST_Slope"] = data["ST_Slope"].replace("Up", 0)
         out["ST_Slope"] = out["ST_Slope"].replace("Flat", 1)
         out["ST_Slope"] = out["ST_Slope"].replace("Down", 2)
+
+    out["FastingBS"] = data["FastingBS"]
 
     return out
