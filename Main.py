@@ -1,6 +1,5 @@
 import pandas as pd
 
-
 def load_data(one_out_of_k: bool):
     out = pd.DataFrame()
 
