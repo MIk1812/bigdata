@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def load_data(one_out_of_k: bool):
     out = pd.DataFrame()
 
@@ -14,12 +15,12 @@ def load_data(one_out_of_k: bool):
     out["Oldpeak"] = data["Oldpeak"]
     out["HeartDisease"] = data["HeartDisease"]
 
+    # Feature transform common columns
+    out["Male"] = data["Sex"].eq("M").astype(int)
+    out["Exercise_Angina"] = data["ExerciseAngina"].eq("Y").astype(int)
+
     # Apply feature transformations
     if one_out_of_k:
-        # Feature Transform Sex column to One-out-of-K coding
-        out["Male"] = data["Sex"].eq("M").astype(int)
-        out["Female"] = data["Sex"].eq("F").astype(int)
-
         # Feature Transform ChestPainType to One-out-of-K coding
         out["ATA"] = data["ChestPainType"].eq("ATA").astype(int)
         out["NAP"] = data["ChestPainType"].eq("NAP").astype(int)
@@ -30,9 +31,6 @@ def load_data(one_out_of_k: bool):
         out["ECG_normal"] = data["RestingECG"].eq("Normal").astype(int)
         out["ECG_ST"] = data["RestingECG"].eq("ST").astype(int)
         out["ECG_LVH"] = data["RestingECG"].eq("LVH").astype(int)
-
-        # Feature Transform ExcerciseAngina to One-out-of-K coding
-        out["Exercise_Angina"] = data["ExerciseAngina"].eq("Y").astype(int)
 
         # Feature Transform ST_Slope to One-out-of-K coding
         out["ST_Slop_Up"] = data["ST_Slope"].eq("Up").astype(int)
@@ -54,9 +52,6 @@ def load_data(one_out_of_k: bool):
         out["RestingECG"] = out["RestingECG"].replace("ST", 1)
         out["RestingECG"] = out["RestingECG"].replace("LVH", 2)
 
-        # Feature transform ExcerciseAngina (no = 0, yes = 1)
-        out["Exercise_Angina"] = data["ExerciseAngina"].eq("Y").astype(int)
-
         # Feature transform ST_Slope
         out["ST_Slope"] = data["ST_Slope"].replace("Up", 0)
         out["ST_Slope"] = out["ST_Slope"].replace("Flat", 1)
@@ -66,16 +61,20 @@ def load_data(one_out_of_k: bool):
 
     return out
 
+
 def remove_outliers():
     X = pd.read_csv("Data/feature_transform.csv", delimiter=',')
     Xk = pd.read_csv("Data/one_out_of_k.csv", delimiter=',')
 
-    # if X["RestingBP"] == 0: print("1")
-
     X.drop(X[X['RestingBP'] == 0].index, inplace = True)
     X.drop(X[X['Cholesterol'] == 0].index, inplace=True)
-    X.to_csv("feature_transform_outliers_removed.csv")
+    X.to_csv("feature_transform_outliers_removed.csv", index=False)
 
-    Xk.drop(X[X['RestingBP'] == 0].index, inplace=True)
-    Xk.drop(X[X['Cholesterol'] == 0].index, inplace=True)
-    X.to_csv("one_out_of_k_outliers_removed.csv")
+    Xk.drop(Xk[Xk['RestingBP'] == 0].index, inplace=True)
+    Xk.drop(Xk[Xk['Cholesterol'] == 0].index, inplace=True)
+    Xk.to_csv("one_out_of_k_outliers_removed.csv", index=False)
+
+
+load_data(False).to_csv('feature_transform.csv', index=False)
+load_data(True).to_csv('one_out_of_k.csv', index=False)
+remove_outliers()
