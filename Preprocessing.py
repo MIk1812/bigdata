@@ -38,9 +38,6 @@ def load_data(one_out_of_k: bool):
         out["ST_Slop_Down"] = data["ST_Slope"].eq("Down").astype(int)
 
     else:
-        # Feature transform Sex (female = 0, male = 1)
-        out["Sex"] = data["Sex"].eq("M").astype(int)
-
         # Feature transform ChestPainType
         out["ChestPainType"] = data["ChestPainType"].replace("ATA", 0)
         out["ChestPainType"] = out["ChestPainType"].replace("NAP", 1)
