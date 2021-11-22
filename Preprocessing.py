@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def load_data(one_out_of_k: bool):
     out = pd.DataFrame()
 
@@ -66,16 +67,20 @@ def load_data(one_out_of_k: bool):
 
     return out
 
+
 def remove_outliers():
     X = pd.read_csv("Data/feature_transform.csv", delimiter=',')
     Xk = pd.read_csv("Data/one_out_of_k.csv", delimiter=',')
 
-    # if X["RestingBP"] == 0: print("1")
-
     X.drop(X[X['RestingBP'] == 0].index, inplace = True)
     X.drop(X[X['Cholesterol'] == 0].index, inplace=True)
-    X.to_csv("feature_transform_outliers_removed.csv")
+    X.to_csv("feature_transform_outliers_removed.csv", index=False)
 
-    Xk.drop(X[X['RestingBP'] == 0].index, inplace=True)
-    Xk.drop(X[X['Cholesterol'] == 0].index, inplace=True)
-    X.to_csv("one_out_of_k_outliers_removed.csv")
+    Xk.drop(Xk[Xk['RestingBP'] == 0].index, inplace=True)
+    Xk.drop(Xk[Xk['Cholesterol'] == 0].index, inplace=True)
+    Xk.to_csv("one_out_of_k_outliers_removed.csv", index=False)
+
+
+load_data(False).to_csv('feature_transform.csv', index=False)
+load_data(True).to_csv('one_out_of_k.csv', index=False)
+remove_outliers()
