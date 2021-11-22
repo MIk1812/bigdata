@@ -1,3 +1,4 @@
+from pandas.core.frame import DataFrame
 import pandas as pd
 
 
@@ -72,6 +73,11 @@ def remove_outliers():
     Xk.to_csv("one_out_of_k_outliers_removed.csv", index=False)
 
 
-load_data(False).to_csv('feature_transform.csv', index=False)
-load_data(True).to_csv('one_out_of_k.csv', index=False)
-remove_outliers()
+def save_data():
+    load_data(False).to_csv('feature_transform.csv', index=False)
+    load_data(True).to_csv('one_out_of_k.csv', index=False)
+    remove_outliers()
+
+
+def normalize_csv(df: DataFrame):
+    return (df - df.mean()) / df.std()
