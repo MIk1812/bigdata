@@ -64,7 +64,7 @@ def remove_outliers():
     X = pd.read_csv("Data/feature_transform.csv", delimiter=',')
     Xk = pd.read_csv("Data/one_out_of_k.csv", delimiter=',')
 
-    X.drop(X[X['RestingBP'] == 0].index, inplace = True)
+    X.drop(X[X['RestingBP'] == 0].index, inplace=True)
     X.drop(X[X['Cholesterol'] == 0].index, inplace=True)
     X.to_csv("feature_transform_outliers_removed.csv", index=False)
 
@@ -82,3 +82,5 @@ def save_data():
 def normalize_dataframe(df: DataFrame):
     return (df - df.mean()) / df.std()
 
+
+save_data()

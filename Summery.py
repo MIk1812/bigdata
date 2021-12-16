@@ -1,6 +1,19 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
+
+
+def makeBoxPlot(dataframe):
+    dataframe_1 = dataframe.loc[:,'Age':'Oldpeak'].copy()
+    dataframe_2 = dataframe.loc[:,'HeartDisease':'FastingBS'].copy()
+    dataframe_1.boxplot(figsize=(5,5))
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
+    dataframe_2.boxplot(figsize=(5,5))
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
 
 def createBoxPlots():
     spread = np.random.rand(50) * 100
